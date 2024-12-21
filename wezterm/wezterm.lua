@@ -78,6 +78,10 @@ create_keybinds("l", "LEADER", act.ActivatePaneDirection("Right"))
 create_keybinds("k", "LEADER", act.ActivatePaneDirection("Up"))
 create_keybinds("j", "LEADER", act.ActivatePaneDirection("Down"))
 
+-- Keybinds for tab management
+create_keybinds("t", "LEADER", act.SpawnTab("CurrentPaneDomain"))
+create_keybinds("c", "LEADER", act.CloseCurrentTab({ confirm = true }))
+
 -- Assign the converted keybinds from map -> config.keys
 config.keys = map
 
