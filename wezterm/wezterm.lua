@@ -16,13 +16,47 @@ local function create_keybinds(key, mods, action)
 	return map
 end
 
+-- This function returns the suggested title for a tab.
+-- It prefers the title that was set via `tab:set_title()`
+-- or `wezterm cli set-tab-title`, but falls back to the
+-- title of the active pane in that tab.
+local function tab_title(tab_info)
+	local title = tab_info.tab_title
+	-- if the tab title is explicitly set, take that
+	if title and #title > 0 then
+		return title
+	end
+	-- Otherwise, use the title from the active pane
+	-- in that tab
+	return tab_info.active_pane.title
+end
+
 -- NOTE: Setup any appearance values
 
 -- Set the theme to Gruvbox Dark
 config.color_scheme = "Gruvbox Dark (Gogh)"
 
--- Setup the tab configs
+-- Setup the retro style tabs
 config.use_fancy_tab_bar = false
+
+-- Basic tab color setup
+-- TODO: Make this look a little cleaner later on
+config.colors = {
+	tab_bar = {
+		background = "#282828",
+
+		active_tab = {
+			bg_color = "#fbf1c7",
+			fg_color = "#333333",
+			italic = true,
+		},
+
+		inactive_tab = {
+			bg_color = "#665c54",
+			fg_color = "#333333",
+		},
+	},
+}
 
 -- NOTE: Setup all keybind related details here
 
