@@ -16,21 +16,6 @@ local function create_keybinds(key, mods, action)
 	return map
 end
 
--- This function returns the suggested title for a tab.
--- It prefers the title that was set via `tab:set_title()`
--- or `wezterm cli set-tab-title`, but falls back to the
--- title of the active pane in that tab.
-local function tab_title(tab_info)
-	local title = tab_info.tab_title
-	-- if the tab title is explicitly set, take that
-	if title and #title > 0 then
-		return title
-	end
-	-- Otherwise, use the title from the active pane
-	-- in that tab
-	return tab_info.active_pane.title
-end
-
 -- NOTE: Setup any appearance values
 
 -- Set the theme to Gruvbox Dark
@@ -38,6 +23,16 @@ config.color_scheme = "Gruvbox Dark (Gogh)"
 
 -- Setup the retro style tabs
 config.use_fancy_tab_bar = false
+
+-- Setup renaming the tab action, for later use in a keybinding
+local action = act.PromptInputLine({
+	description = "Enter a new name for the tab",
+	action = wezterm.action_callback(function(window, pane, line)
+		if line then
+			window:active_tab():set_title(line)
+		end
+	end),
+})
 
 -- Basic tab color setup
 -- TODO: Make this look a little cleaner later on
@@ -81,6 +76,7 @@ create_keybinds("j", "LEADER", act.ActivatePaneDirection("Down"))
 -- Keybinds for tab management
 create_keybinds("t", "LEADER", act.SpawnTab("CurrentPaneDomain"))
 create_keybinds("c", "LEADER", act.CloseCurrentTab({ confirm = true }))
+create_keybinds("r", "LEADER", action)
 
 -- Assign the converted keybinds from map -> config.keys
 config.keys = map
