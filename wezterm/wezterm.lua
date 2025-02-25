@@ -63,8 +63,8 @@ config.leader = {
 }
 
 -- Keybinds for managing splits (using neovim split keybinds for ease of memory)
-create_keybinds("s", "LEADER", act.SplitHorizontal({ domain = "CurrentPaneDomain" }))
-create_keybinds("v", "LEADER", act.SplitVertical({ domain = "CurrentPaneDomain" }))
+create_keybinds("v", "LEADER", act.SplitHorizontal({ domain = "CurrentPaneDomain" }))
+create_keybinds("s", "LEADER", act.SplitVertical({ domain = "CurrentPaneDomain" }))
 create_keybinds("x", "LEADER", act.CloseCurrentPane({ confirm = true }))
 
 -- Keybinds for moving between splits (using vim keybinds for movement)
